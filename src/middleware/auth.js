@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import Member from '../models/Member.js';
 
 export const auth = async (req, res, next) => {
   const authHeader = req.headers.authorization || '';
@@ -7,7 +8,14 @@ export const auth = async (req, res, next) => {
   if (!token) return res.status(401).json({ status: 'echec', message: 'aucun token !' });
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(payload.id).select('-password');
+    let user;
+    
+    if (payload.type === 'Member') {
+      user = await Member.findById(payload.id).select('-password');
+    } else {
+      user = await User.findById(payload.id).select('-password');
+    }
+    
     if (!user) return res.status(401).json({ status: 'echec', message: 'Utilisateur Introuvable !' });
     req.user = user;
     next();

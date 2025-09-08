@@ -13,6 +13,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/all-users', auth, listAllUsers);
+
 router.use('/auth', authRoutes);
 router.use('/members', memberRoutes);
 router.use('/tasks', taskRoutes);

@@ -13,8 +13,9 @@ npm run dev
 - `POST /auth/register` { name, email, password, role? }
 - `POST /auth/login` { email, password }
 - `GET  /auth/me` (Bearer token)
+- `GET  /users?search=&page=1&limit=10`
 - `GET  /members?search=&page=1&limit=10`
-- `POST /members` { name, email, role }
+- `POST /members` { name, email, password, role }
 - `GET  /members/:id`
 - `PUT  /members/:id`
 - `DELETE /members/:id`
@@ -141,6 +142,37 @@ npm run dev
       "name": "John Doe",
       "email": "john@example.com",
       "role": "member"
+    }
+  }
+}
+```
+
+### Users
+
+#### GET `/api/users`
+**Headers:** `Authorization: Bearer <token>`
+**Query params:** `?search=john&page=1&limit=10`
+**Permissions:** Tous les utilisateurs authentifiés peuvent voir les utilisateurs
+**Response (200):**
+```json
+{
+  "status": "success",
+  "data": {
+    "items": [
+      {
+        "_id": "ObjectId",
+        "name": "Admin User",
+        "email": "admin@example.com",
+        "role": "admin",
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "updatedAt": "2024-01-01T00:00:00.000Z"
+      }
+    ],
+    "pagination": {
+      "page": 1,
+      "limit": 10,
+      "total": 1,
+      "pages": 1
     }
   }
 }

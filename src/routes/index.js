@@ -2,6 +2,7 @@ import { Router } from 'express';
 import authRoutes from './authRoutes.js';
 import memberRoutes from './memberRoutes.js';
 import taskRoutes from './taskRoutes.js';
+import userRoutes from './userRoutes.js';
 
 const router = Router();
 
@@ -12,5 +13,6 @@ router.get('/', (req, res) => {
 router.use('/auth', authRoutes);
 router.use('/members', memberRoutes);
 router.use('/tasks', taskRoutes);
+router.use('/users', userRoutes);
 
 export default router;
